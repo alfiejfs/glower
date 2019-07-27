@@ -1,0 +1,9 @@
+name: Glower
+version: 1.0
+description: Player glow plugin
+author: AvroVulcan
+main: com.github.avroovulcan.glower.Glower
+commands:
+  glower:
+    description: Opens glow GUI
+    usage: /glower
