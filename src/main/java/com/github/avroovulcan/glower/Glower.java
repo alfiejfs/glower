@@ -26,6 +26,7 @@ public class Glower extends JavaPlugin
     @Override
     public void onEnable()
     {
+        saveDefaultConfig();
         colouring = new ArrayList<>();
         setupPossible();
         getCommand("glower").setExecutor(new GlowCommand(this));
@@ -34,7 +35,8 @@ public class Glower extends JavaPlugin
 
     public void openGlowInventory(Player p)
     {
-        Inventory i = Bukkit.createInventory(null, 9, ChatColor.GOLD + ChatColor.BOLD.toString() + "Glow Colour Selector");
+        Inventory i = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('&',
+            getConfig().getString("inventory-name")));
         for(String s : possible)
         {
             if(p.hasPermission("glower." + ChatColor.stripColor(s)))
