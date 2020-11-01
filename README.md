@@ -1,5 +1,5 @@
 # glower
-A quick tool made tool for allowing players to glow a colour of their choice in Minecraft
+A quick tool made tool for allowing players to glow a color of their choice in Minecraft
 
 ![Glowing example](https://i.imgur.com/3Yv6RPK.png)
 

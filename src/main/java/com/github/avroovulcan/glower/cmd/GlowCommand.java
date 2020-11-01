@@ -9,19 +9,23 @@ import org.bukkit.entity.Player;
 public class GlowCommand implements CommandExecutor
 {
 
-    private Glower instance;
+    private final Glower plugin;
 
-    public GlowCommand(Glower instance)
+    public GlowCommand(Glower plugin)
     {
-        this.instance = instance;
+        this.plugin = plugin;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        if(!(sender instanceof Player)) return true;
-        Player p = (Player) sender;
-        instance.openGlowInventory(p);
+        if(!(sender instanceof Player)) {
+            sender.sendMessage("Only a player can open the glowing menu...");
+            return true;
+        }
+
+        Player player = (Player) sender;
+        plugin.openGlowInventory(player);
         return true;
     }
 }

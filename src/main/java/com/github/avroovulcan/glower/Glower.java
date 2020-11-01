@@ -1,7 +1,11 @@
 package com.github.avroovulcan.glower;
 
 import com.github.avroovulcan.glower.cmd.GlowCommand;
-import com.github.avroovulcan.glower.event.InventoryClickListener;
+import com.github.avroovulcan.glower.listener.InventoryClickListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -13,68 +17,68 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Wool;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+public class Glower extends JavaPlugin {
 
-public class Glower extends JavaPlugin
-{
+  private final static List<String> POSSIBLE_COLORS = Arrays.asList(
+      ChatColor.RED + "Red",
+      ChatColor.BLUE + "Blue",
+      ChatColor.BLACK + "Black",
+      ChatColor.WHITE + "White",
+      ChatColor.YELLOW + "Yellow",
+      ChatColor.GREEN + "Green",
+      ChatColor.LIGHT_PURPLE + "Pink",
+      ChatColor.DARK_PURPLE + "Purple"
+  );
 
-    private List<UUID> colouring;
-    private List<String> possible;
+  private final static ItemStack CLEAR_ITEM = new ItemStack(Material.BARRIER);
 
-    @Override
-    public void onEnable()
-    {
-        saveDefaultConfig();
-        colouring = new ArrayList<>();
-        setupPossible();
-        getCommand("glower").setExecutor(new GlowCommand(this));
-        Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
-    }
+  static {
+    ItemMeta clearMeta = CLEAR_ITEM.getItemMeta();
+    clearMeta.setDisplayName(ChatColor.WHITE + "Remove Outline");
+    CLEAR_ITEM.setItemMeta(clearMeta);
+  }
 
-    public void openGlowInventory(Player p)
-    {
-        Inventory i = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('&',
+  private List<UUID> pickingColour;
+
+
+  @Override
+  public void onEnable() {
+    saveDefaultConfig();
+
+    this.pickingColour = new ArrayList<>();
+    getCommand("glower").setExecutor(new GlowCommand(this));
+
+    Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
+  }
+
+  public void openGlowInventory(Player player) {
+    Inventory inventory = Bukkit.createInventory(null, 9,
+        ChatColor.translateAlternateColorCodes('&',
             getConfig().getString("inventory-name")));
-        for(String s : possible)
-        {
-            if(p.hasPermission("glower." + ChatColor.stripColor(s)))
-            {
-                Wool wool = new Wool(DyeColor.valueOf(ChatColor.stripColor(s).toUpperCase()));
-                ItemStack is = wool.toItemStack(1);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(s);
-                is.setItemMeta(im);
-                i.addItem(is);
-            }
-        }
 
-        ItemStack is = new ItemStack(Material.BARRIER);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Remove Outline");
-        is.setItemMeta(im);
-        i.addItem(is);
+    for (String color : POSSIBLE_COLORS) {
+      if (player.hasPermission("glower." + ChatColor.stripColor(color))) {
+        Wool wool = new Wool(DyeColor.valueOf(ChatColor.stripColor(color).toUpperCase()));
 
-        p.openInventory(i);
-        colouring.add(p.getUniqueId());
+        ItemStack item = wool.toItemStack(1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(color);
+        item.setItemMeta(meta);
+
+        inventory.addItem(item);
+      }
     }
 
-    private void setupPossible()
-    {
-        possible = new ArrayList<>();
-        possible.add(ChatColor.RED + "Red");
-        possible.add(ChatColor.BLUE + "Blue");
-        possible.add(ChatColor.BLACK + "Black");
-        possible.add(ChatColor.WHITE + "White");
-        possible.add(ChatColor.YELLOW + "Yellow");
-        possible.add(ChatColor.GREEN + "Green");
-        possible.add(ChatColor.LIGHT_PURPLE + "Pink");
-        possible.add(ChatColor.DARK_PURPLE + "Purple");
-    }
+    inventory.addItem(CLEAR_ITEM);
+    player.openInventory(inventory);
+    pickingColour.add(player.getUniqueId());
+  }
 
-    public List<UUID> getColouring()
-    {
-        return this.colouring;
-    }
+  public void removePickingColor(UUID uuid) {
+    this.pickingColour.remove(uuid);
+  }
+
+  public boolean isPickingColor(UUID uuid) {
+    return this.pickingColour.contains(uuid);
+  }
 }
