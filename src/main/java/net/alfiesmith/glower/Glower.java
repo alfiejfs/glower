@@ -1,7 +1,7 @@
-package com.github.avroovulcan.glower;
+package net.alfiesmith.glower;
 
-import com.github.avroovulcan.glower.cmd.GlowCommand;
-import com.github.avroovulcan.glower.listener.InventoryClickListener;
+import net.alfiesmith.glower.cmd.GlowCommand;
+import net.alfiesmith.glower.listener.InventoryClickListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

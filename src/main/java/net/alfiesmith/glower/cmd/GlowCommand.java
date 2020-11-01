@@ -1,6 +1,6 @@
-package com.github.avroovulcan.glower.cmd;
+package net.alfiesmith.glower.cmd;
 
-import com.github.avroovulcan.glower.Glower;
+import net.alfiesmith.glower.Glower;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

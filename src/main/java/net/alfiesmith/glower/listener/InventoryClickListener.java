@@ -1,7 +1,7 @@
-package com.github.avroovulcan.glower.listener;
+package net.alfiesmith.glower.listener;
 
-import com.github.avroovulcan.glower.Glower;
-import com.github.avroovulcan.glower.entity.GlowColor;
+import net.alfiesmith.glower.Glower;
+import net.alfiesmith.glower.entity.GlowColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;

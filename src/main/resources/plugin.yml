@@ -1,8 +1,8 @@
 name: Glower
-version: 1.0
-description: Player glow plugin
-author: AvroVulcan
-main: com.github.avroovulcan.glower.Glower
+version: 1.1
+description: Plugin that enables players to glow a color of their choice
+author: Alfie Smith
+main: net.alfiesmith.glower.Glower
 commands:
   glower:
     description: Opens glow GUI

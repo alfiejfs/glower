@@ -1,4 +1,4 @@
-package com.github.avroovulcan.glower.entity;
+package net.alfiesmith.glower.entity;
 
 public enum GlowColor
 {
