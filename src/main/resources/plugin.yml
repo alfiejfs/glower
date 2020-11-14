@@ -1,5 +1,5 @@
 name: Glower
-version: 1.1
+version: 1.2
 description: Plugin that enables players to glow a color of their choice
 author: Alfie Smith
 main: net.alfiesmith.glower.Glower
