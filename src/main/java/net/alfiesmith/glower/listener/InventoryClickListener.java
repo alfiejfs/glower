@@ -89,11 +89,11 @@ public class InventoryClickListener implements Listener {
     if (scoreboard == null) {
       scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
     }
-    if (scoreboard.getTeam(player.getName() + "color") != null) {
-      scoreboard.getTeam(player.getName() + "color").unregister();
+    if (scoreboard.getTeam(player.getName()) != null) {
+      scoreboard.getTeam(player.getName()).unregister();
     }
 
-    Team team = scoreboard.registerNewTeam(player.getName() + "color");
+    Team team = scoreboard.registerNewTeam(player.getName());
     team.setColor(teamColor);
     team.setPrefix(teamColor + "");
     team.addEntry(player.getName());
